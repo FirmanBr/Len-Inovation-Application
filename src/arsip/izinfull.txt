@@ -1,0 +1,138 @@
+import React, {Component} from 'react'
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { Col  ,Form, FormGroup, Label, Input } from 'reactstrap';
+import { userService, authenticationService } from '../services';
+import Logo from '../Image/logo.png';
+import Image from 'react-bootstrap/Image'
+
+
+class IzinPage extends Component {
+
+  constructor(props) {
+    super(props);
+
+
+
+    this.state = {
+        currentUser: authenticationService.currentUserValue,
+        userFromApi: null
+
+    };
+}
+
+componentDidMount() {
+  const { currentUser } = this.state;
+  userService.getById(currentUser.id).then(userFromApi => this.setState({ userFromApi }));
+}
+
+    render(){
+      const { currentUser } = this.state;
+        return( 
+          <Card  className="text-left" style={{ height: '80.rem' }} >
+          <CardContent>
+            <Typography  color="textSecondary" gutterBottom >
+
+            <table>
+              <tr>
+                <td rowspan="2"><Image src={Logo} width={80} height={55} mode='fit' /> </td>
+                <td><b>PT.LEN INDUSTRI (PERSERO)</b></td>
+              </tr>
+              <tr>
+                <td><b>JL.Soekarno Hatta no 442 Bandung</b></td>
+              </tr>
+            </table>
+
+            <div></div>
+
+            <Typography  color="textSecondary" gutterBottom align="center" ><b> SURAT PERMOHONAN IZIN PRIBADI</b></Typography>
+            <Typography  color="textSecondary" gutterBottom align="left" ><b> yang bertanda tangan dibawah ini :</b></Typography>
+            
+            </Typography>
+
+
+            <Typography  color="textSecondary" gutterBottom align="left" >         
+            
+            <Form>
+
+            <table align="center" width="400">
+              <tr valign="middle"  height="50">
+                <th ><Label for="exampleUsername" sm={1}>Nama</Label></th>
+                <th>:</th>
+                <th>
+                  <Col sm={400}>
+                  <Input type="text" name="Username" id="exampleUsername" value = {currentUser.firstName + " "  + currentUser.lastName }  />
+                  </Col>
+                </th>
+              </tr>
+              <tr valign="middle"  height="50">
+                <th><Label for="exampleNik" sm={1}>Nik</Label></th>
+                <th>:</th>
+                <th>
+                  <Col sm={400}>
+                  <Input type="text" name="Nik" id="exampleNik" />
+                  </Col>
+                </th>
+              </tr>
+              <tr valign="middle" height="50">
+                <th><Label for="exampleJabatan" sm={1}>Jabatan</Label></th>
+                <th>:</th>
+                <th>
+                  <Col sm={400}>
+                  <Input type="text" name="Jabatan" id="exampleJabatan" />
+                  </Col>
+                </th>
+              </tr>
+              <tr valign="middle" height="50">
+                <th><Label for="exampleBagian" sm={1}>Bagian</Label></th>
+                <th>:</th>
+                <th>
+                  <Col sm={400}>
+                  <Input type="text" name="Bagian" id="exampleBagian" />
+                  </Col>
+                </th>
+              </tr>
+              <tr valign="middle" height="50">
+                <th><Label for="exampleDirektorat" sm={1}>Direktorat</Label></th>
+                <th>:</th>
+                <th>
+                  <Col sm={400}>
+                  <Input type="text" name="Direktorat" id="exampleDirektorat" />
+                  </Col>
+                </th>
+              </tr>
+            </table>
+            
+            <Typography  color="textSecondary" gutterBottom align="left" ><b> dengan ini mengajukan permohonan sebagai berikut</b></Typography>
+            <FormGroup>
+              <Input type="textarea" name="Direktorat" id="exampleDirektorat" />
+            </FormGroup>
+            <FormGroup row>
+                <Label for="exampleTanggal" sm={2}>Pada Tanggal</Label>
+                  <Col sm={4}>
+                    <Input type="date" name="Tanggal" id="exampleTanggal" />
+                  </Col>
+                <Label for="exampleSampai" sm={1}>Jam</Label>
+                <Col sm={5}>
+                    <Input type="time" name="Sampai" id="exampleSampai" />
+                  </Col>
+              </FormGroup>
+              <Typography  color="textSecondary" gutterBottom align="left" ><b> Demikian permohonan saya, atas perhatiannya diucapkan terima kasih</b></Typography>
+              <Input hidden type="text" name="Status" id="exampleStatus" value="0"/>
+              <Input hidden type="text" name="Perihal" id="examplePerihal"  value="Izin Pribadi"/>
+              <div align="center">
+              <Button outline color="primary" size="sm" align="right"><b>Mengajukan</b></Button>
+              </div>
+            </Form>
+
+            </Typography>
+
+          </CardContent>
+        </Card>
+        )
+    }
+}
+
+export default IzinPage                       

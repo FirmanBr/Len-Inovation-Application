@@ -1,0 +1,2 @@
+<QRcode value="http://facebook.github.io/react/" />
+import QRcode from 'qrcode.react';

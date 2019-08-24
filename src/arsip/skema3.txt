@@ -1,0 +1,49 @@
+
+const path = require('path');
+const express = require('express');
+const hbs = require('hbs');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
+const app = express();
+
+const conn = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'len'
+});
+ 
+conn.connect((err) =>{
+  if(err) throw err;
+  console.log('Mysql Connected...');
+})
+
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'hbs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/assets',express.static(__dirname + '/public'));
+
+app.get('/',(req, res) => {
+  let sql = "SELECT * FROM izin";
+  let query = conn.query(sql, (err, results) => {
+    if(err) throw err;
+    res.render('izin_view',{
+      results: results
+    });
+  });
+});
+
+app.post('/save',(req, res) => {
+  let data = {Username: req.body.Username, Tanggal: req.body.Tanggal, Sampai : req.body.Sampai , Divisi : req.body.Divisi  , 	Jabatan: req.body.Jabatan
+            , Keterangan: req.body.Keterangan,  	Status : req.body. 	Status };
+  let sql = "INSERT INTO izin SET ?";
+  let query = conn.query(sql, data,(err, results) => {
+    if(err) throw err;
+    res.redirect('/');
+  });
+});
+
+app.listen(4000, () => {
+  console.log('Server is running at port 4000');
+});

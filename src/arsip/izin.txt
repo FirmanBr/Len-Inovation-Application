@@ -1,0 +1,177 @@
+import React, {Component} from 'react'
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { userService, authenticationService } from '../services';
+import { thisExpression } from '@babel/types';
+
+class IzinPage extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        currentUser: authenticationService.currentUserValue,
+        userFromApi: null,
+        Username: '',
+        Tanggal: '',
+        Sampai:'',
+        Divisi:'',
+        Jabatan:'',
+        Keterangan:'',
+        Status:'',
+        msg: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this)
+}
+
+handleSubmit(event) {
+  event.preventDefault()
+  var data = {
+    Username: this.state.Username,
+    Tanggal: this.state.Tanggal,
+    Sampai: this.state.Sampai,
+    Divisi: this.state.Divisi,
+    Jabatan: this.state.Jabatan,
+    Keterangan: this.state.Keterangan,
+    Status: this.state.Status
+  }
+  console.log(data)
+
+  fetch("/save", {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+}).then(function(response) {
+    if (response.status >= 400) {
+      throw new Error("Bad response from server");
+    }
+    return response.json();
+}).then(function(data) {
+    console.log(data)    
+    if(data == "success"){
+       this.setState({msg: "Thanks for registering"});  
+    }
+}).catch(function(err) {
+    console.log(err)
+});
+}
+
+logChange(e) {
+  this.setState({[e.target.Username]: e.target.value});  
+}
+
+componentDidMount() {
+  const { currentUser } = this.state;
+  userService.getById(currentUser.id).then(userFromApi => this.setState({ userFromApi }));
+}
+
+
+    render(){
+      const { currentUser, userFromApi } = this.state;
+        return(
+          <Card backgroundColor='transparent' className="text-left" style={{ height: '80.rem' }} >
+          <CardContent>
+            <Typography  color="textSecondary" gutterBottom align="center">
+              <b>Izin Pribadi </b>
+            </Typography>
+ 
+            <Typography variant="body2" component="p">            
+            
+            <Form onSubmit={this.handleSubmit}  method="post">
+              <FormGroup row>
+                <Label for="exampleUsername" sm={1}>Username</Label>
+                  <Col sm={10}>
+                    <Input 
+                     type="text"
+                     name="Username" 
+                     id="Username" 
+                     value = {currentUser.firstName + " "  + currentUser.lastName }
+                     onChange={this.logChange}
+                     required />
+                  </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="exampleTanggal" sm={1}>Tanggal</Label>
+                  <Col sm={4}>
+                    <Input 
+                    type="date" 
+                    name="Tanggal" 
+                    id="Tanggal"
+                    onChange={this.logChange}
+                    required />
+                  </Col>
+                <Label for="exampleSampai" sm={1}>Sampai</Label>
+                <Col sm={5}>
+                    <Input type="date" 
+                    name="Sampai" 
+                    id="Sampai" 
+                    onChange={this.logChange}
+                    required/>
+                  </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="exampleDivisi" sm={1}>Divisi</Label>
+                  <Col sm={10}>
+                    <Input 
+                    type="text" 
+                    name="Divisi" 
+                    id="Divisi" 
+                    onChange={this.logChange}
+                    required  />
+                  </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="Jabatan" sm={1}>Jabatan</Label>
+                  <Col sm={10}>
+                    <Input 
+                    type="text" 
+                    name="Jabatan" 
+                    id="Jabatan"  
+                    onChange={this.logChange}
+                    required/>
+                  </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="exampleKeterangan" sm={1}>Keterangan</Label>
+                  <Col sm={10}>
+                    <Input 
+                    type="textarea" 
+                    name="Keterangan" 
+                    id="Keterangan"  
+                    onChange={this.logChange}
+                    required />
+                  </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label hidden for="exampleStatus" sm={1}>Status</Label>
+                  <Col sm={10}>
+                    <Input 
+                    hidden
+                    type="text" 
+                    name="Status" 
+                    id="Status"  
+                    value="0"
+                    onChange={this.logChange}
+                    required />
+                  </Col>                                                                                                                                   
+              </FormGroup>
+              <Button 
+                color="secondary" 
+                size="sm" 
+                align="right"
+                type="submit">
+                Submit
+              </Button>
+            </Form>
+
+            </Typography>
+
+          </CardContent>
+        </Card>
+        )
+    }
+}
+
+export default IzinPage                       

@@ -1,0 +1,57 @@
+{
+  "name": "react_role_authorization",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.3.1",
+    "@material/react-button": "^0.15.0",
+    "bootstrap": "^4.3.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "formik": "^1.5.7",
+    "hbs": "^4.0.4",
+    "history": "^4.9.0",
+    "material-ui": "^0.20.2",
+    "mysql": "github:mysqljs/mysql",
+    "node-sass": "^4.12.0",
+    "qrcode.react": "^0.9.3",
+    "react": "^16.9.0",
+    "react-awesome-button": "^6.1.2",
+    "react-background-slider": "^1.2.0",
+    "react-bootstrap": "^1.0.0-beta.10",
+    "react-dom": "^16.9.0",
+    "react-html2pdf": "^1.0.1",
+    "react-redux": "^7.1.0",
+    "react-router": "^3.2.3",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.1",
+    "react-to-pdf": "0.0.8",
+    "reactstrap": "^8.0.1",
+    "rxjs": "^6.5.2",
+    "yup": "^0.27.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "nodemon server.js",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
