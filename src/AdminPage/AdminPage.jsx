@@ -140,7 +140,7 @@ class AdminPage extends Component {
                 <Form  onSubmit={this.handleEdit} method="PUT">    
                   <FormGroup>
                     <Label for="Nik">Nik</Label>
-                    <Input type="text" name="Nik" id="Nik" onChange={this.lognik} value={this.state.Nik}/>
+                    <Input disabled type="text" name="Nik" id="Nik" onChange={this.lognik} value={this.state.Nik}/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="Reason">Reason</Label>

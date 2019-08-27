@@ -9,6 +9,8 @@ import { Form, Label, Input, Col } from 'reactstrap';
 import { FormGroup } from '@material-ui/core';
 import moment from 'moment'
 
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 
 class Approval extends Component {
@@ -98,7 +100,7 @@ class Approval extends Component {
     });
   }
   
-
+         
   async handleEditCuti (event) {
 
     event.preventDefault()
@@ -147,6 +149,17 @@ class Approval extends Component {
 
   }
 
+  test()
+  {
+    const doc = new jsPDF();
+
+    doc.autoTable({
+      html: '#data'
+      
+  })
+    doc.setTextColor(255);
+    doc.save('table.pdf');
+  }
 
     render(){
 
@@ -173,7 +186,7 @@ class Approval extends Component {
                   <th>Tanggal</th>
                   <th>Perihal</th>
                   <th>Approval</th>
-                  <td><Button Button variant="outlined" color="primary" >PDF</Button></td>
+                  <td><Button Button variant="outlined" color="primary" onClick={() => this.test()}  >PDF</Button></td>
                 </tr>
                 </thead>
 
